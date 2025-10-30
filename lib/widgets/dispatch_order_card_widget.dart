@@ -1,0 +1,156 @@
+// lib/widgets/dispatch_order_card_widget.dart
+
+import 'package:ceat_dealer_portal/views/view_dispatch_status_screen.dart';
+import 'package:flutter/material.dart';
+
+class DispatchOrderCardWidget extends StatelessWidget {
+  final String dispatchNo;
+  // final String invoiceNo;
+  final String invoiceDate;
+  // final String driverName;
+  // final String vehicleCode;
+  final String status;
+  final String deliveryDate;
+  final Color secondaryColor;
+  final Color accentColor;
+  final List<Map<String, dynamic>> dispatchDetails;
+
+  const DispatchOrderCardWidget({
+    super.key,
+    required this.dispatchNo,
+    // required this.invoiceNo,
+    required this.invoiceDate,
+    // required this.driverName,
+    // required this.vehicleCode,
+    required this.status,
+    required this.deliveryDate,
+    required this.secondaryColor,
+    required this.accentColor,
+    required this.dispatchDetails,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            accentColor.withOpacity(0.9),
+            secondaryColor.withOpacity(0.9),
+            accentColor.withOpacity(0.9),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSummaryRow("Dispatch No", dispatchNo),
+          const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          // _buildSummaryRow("Invoice No", invoiceNo),
+          // const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          _buildSummaryRow("Invoice Date", invoiceDate),
+          const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          // _buildSummaryRow("Driver Name", driverName),
+          // const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          // _buildSummaryRow("Vehicle Code", vehicleCode),
+          // const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          _buildSummaryRow("Status", status),
+          const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          _buildSummaryRow("Delivery Date", deliveryDate),
+          const Divider(color: Colors.white54, thickness: 0.8, height: 24),
+          const SizedBox(height: 16), // Spacing
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    accentColor.withOpacity(0.9),
+                    secondaryColor.withOpacity(0.9),
+                    accentColor.withOpacity(0.9),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ViewDispatchStatusScreen(
+                          dispatch_no: dispatchNo,
+                          dispatchDetails: dispatchDetails),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  shadowColor: Colors.transparent,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  "View Dispatch Details",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummaryRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
